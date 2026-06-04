@@ -2,7 +2,8 @@
 __pycache__/
 *.py[codz]
 *$py.class
-
+# environment
+nordex_env/
 # C extensions
 *.so
 
