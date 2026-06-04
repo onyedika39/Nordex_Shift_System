@@ -148,4 +148,4 @@ jupyter notebook notebooks/EDA.ipynb
 
 ## Author
 
-Created by Onyedikachi Kenechukwu as a manufacturing analytics and machine learning portfolio project.
+Created by Michael Kenechukwu as a manufacturing analytics and machine learning portfolio project.
