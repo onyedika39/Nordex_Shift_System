@@ -1,4 +1,4 @@
-import streamlit as st
+﻿import streamlit as st
 import pandas as pd
 import requests
 import datetime
@@ -14,7 +14,7 @@ st.set_page_config(
     layout="wide"
 )
 
-st.title("Nordex Manufacturing 🏭 Shift Intelligence Dashboard")
+st.title("Nordex Manufacturing Shift Intelligence Dashboard")
 
 
 # ==========================

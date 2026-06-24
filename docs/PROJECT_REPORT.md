@@ -1,21 +1,21 @@
-# Project Report: Nordex Shift System
+﻿# Project Report: Nordex Shift System
 
 ## Executive Summary
 
-Nordex Shift System is a manufacturing analytics project designed to evaluate production shift performance and predict shift efficiency using operational data. The project combines exploratory data analysis, operational performance metrics, OEE estimation, feature engineering, and machine learning.
+Nordex Shift System is a manufacturing analytics and machine learning project designed to evaluate production shift performance and predict shift efficiency using operational data. The project combines database extraction, exploratory data analysis, operational metrics, feature engineering, supervised learning, experiment tracking, and application deployment components.
 
-The project demonstrates how production, maintenance, machine, operator, quality, and environmental data can be combined to support better manufacturing decisions.
+The solution demonstrates how production, maintenance, machine, operator, quality, and environmental data can be combined to support better manufacturing decisions.
 
 ## Objective
 
-The main objective is to analyze shift-level production performance and build a machine learning workflow that can predict `shift_efficiency_score`.
+The main objective is to analyze shift-level production performance and build a machine learning workflow that predicts `shift_efficiency_score`.
 
 The business goal is to support:
 
 - better shift planning
 - improved machine uptime
 - reduced defect rates
-- stronger maintenance decision-making
+- stronger maintenance decisions
 - higher production efficiency
 
 ## Data Source
@@ -35,15 +35,14 @@ The dataset includes 296,334 records and 31 original columns covering:
 
 ## Data Preparation
 
-The notebook performs several preparation steps:
+The project performs several preparation steps:
 
 - connects to the SQLite database
 - loads the `ShiftPerformance` table into pandas
-- converts date and time fields to datetime format
-- checks duplicates and missing values
+- validates empty data, missing values, and duplicates
 - fills missing temperature and humidity values
-- fills missing maintenance fields with business-friendly default values
-- removes identifier fields that do not help modeling
+- fills missing maintenance fields with business-readable default values
+- removes identifier fields that do not support modeling
 - creates new performance-related features
 
 ## Exploratory Data Analysis
@@ -95,7 +94,6 @@ The machine learning workflow creates new features including:
 - `shift_duration`
 - `defect_rate`
 - `downtime_ratio`
-- `total_operating_hours`
 - `day_of_week`
 - `hour_of_day`
 
@@ -103,9 +101,9 @@ These features help the model better understand production behavior and efficien
 
 ## Modeling Approach
 
-The project uses a scikit-learn `ColumnTransformer` to handle both numerical and categorical features.
+The project uses a scikit-learn `ColumnTransformer` to handle numerical and categorical features.
 
-Numerical features are passed through directly, while categorical features are encoded using `OneHotEncoder`.
+Numerical features are passed through directly, while categorical features are encoded with `OneHotEncoder`.
 
 Models compared:
 
@@ -121,28 +119,36 @@ Metrics used:
 
 Experiment tracking is configured with MLflow and DagsHub.
 
+## Application Layer
+
+The project includes two application interfaces:
+
+- FastAPI service for model loading, prediction, retraining, and shift optimization.
+- Streamlit dashboard for interactive shift input, prediction results, optimization exploration, and model retraining requests.
+
 ## Business Value
 
-This project shows how data can be used to improve manufacturing operations by:
+This project shows how data can improve manufacturing operations by:
 
 - identifying low-performing shifts
 - understanding downtime impact
 - measuring maintenance-related performance changes
 - estimating OEE trends
 - predicting shift efficiency
-- giving managers evidence for operational decisions
+- supporting evidence-based operational decisions
 
 ## Recommendations
 
 Recommended next steps:
 
-- convert notebook logic into reusable Python scripts
-- create a dashboard for shift supervisors
-- deploy the best model through FastAPI
+- containerize the API and dashboard for deployment
+- deploy the service on AWS
+- move generated artifacts and larger data assets to S3
+- secure DagsHub and MLflow credentials with environment variables or AWS Secrets Manager
+- add automated tests for data processing, feature engineering, and prediction logic
+- add CI checks for code quality before future GitHub updates
 - monitor model performance over time
-- add automated tests and CI checks
-- document model assumptions and limitations
 
 ## Conclusion
 
-Nordex Shift System is a strong foundation for a production analytics and machine learning solution. It demonstrates database access, data cleaning, exploratory analysis, performance engineering, model training, and experiment tracking in a real-world manufacturing context.
+Nordex Shift System is a strong foundation for a production analytics and machine learning solution. It demonstrates database access, data cleaning, exploratory analysis, performance engineering, model training, experiment tracking, API serving, and dashboard interaction in a manufacturing context.

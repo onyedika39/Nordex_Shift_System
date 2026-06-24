@@ -1,4 +1,4 @@
-# Data Dictionary
+﻿# Data Dictionary
 
 The main dataset is stored in `ShiftData.db` inside the `ShiftPerformance` table.
 
@@ -46,12 +46,11 @@ The main dataset is stored in `ShiftData.db` inside the `ShiftPerformance` table
 
 | Feature | Description |
 | --- | --- |
-| `total_operating_hours` | Runtime hours plus downtime converted to hours. |
 | `shift_duration` | Total duration of the shift in hours. |
 | `defect_rate` | Defects divided by units produced. |
 | `downtime_ratio` | Downtime minutes divided by total shift minutes. |
 | `day_of_week` | Day of week extracted from the production date. |
-| `hour_of_day` | Hour extracted from the date/time feature. |
+| `hour_of_day` | Hour extracted from the shift start time. |
 
 ## Missing Data Notes
 

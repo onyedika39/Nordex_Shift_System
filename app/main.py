@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException
+﻿from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 import threading
 import datetime
@@ -65,6 +65,7 @@ class OptimizationInput(BaseModel):
     exp_range: list
     downtime_range: list
     defect_range: list
+    n_trials: int = 100
 
 
 @app.get("/")
@@ -227,7 +228,7 @@ def optimize_shift(input: OptimizationInput):
 
         study.optimize(
             objective,
-            n_trials=100
+            n_trials=input.n_trials
         )
 
         return {

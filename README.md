@@ -1,105 +1,103 @@
-# Nordex Shift System
+﻿# Nordex Shift System
 
-## Project Overview
-
-Nordex Shift System is a data analytics and machine learning project focused on manufacturing shift performance. The project analyzes production output, machine downtime, maintenance activity, operator experience, quality inspection results, and environmental conditions to understand what drives operational efficiency across different production shifts.
-
-The goal is to help a manufacturing business identify performance patterns, reduce downtime, improve product quality, and support better shift planning decisions.
+Nordex Shift System is a manufacturing analytics and machine learning project for understanding and predicting production shift efficiency. It combines SQLite data extraction, exploratory analysis, feature engineering, model training, MLflow/DagsHub experiment tracking, a FastAPI inference service, and a Streamlit dashboard.
 
 ## Business Problem
 
-Manufacturing teams often need to answer practical operational questions:
+Manufacturing teams need clear answers to operational questions such as:
 
 - Which shifts produce the highest output?
 - How does downtime affect production efficiency?
-- Are maintenance events linked to lower performance?
-- Which quality or machine factors contribute to defects?
-- Can shift efficiency be predicted from operational data?
+- Are maintenance events linked to lower shift performance?
+- Which machine, quality, and operator factors contribute to defects?
+- Can shift efficiency be predicted from historical operational data?
 
-This project uses historical shift data to explore these questions and build a machine learning workflow for predicting shift efficiency.
+The project uses historical shift-level production data to identify performance patterns and support better planning, maintenance, and quality decisions.
 
 ## Dataset
 
-The project uses a SQLite database named `ShiftData.db` containing the `ShiftPerformance` table.
+The project uses a SQLite database named `ShiftData.db` with a `ShiftPerformance` table.
 
 Dataset summary:
 
-- 296,334 production shift records
+- 296,334 shift records
 - 31 original columns
 - Production, maintenance, machine, operator, quality, and environmental features
 - Target variable: `shift_efficiency_score`
 
 ## Project Workflow
 
-1. Connected to a SQLite production database.
-2. Loaded shift performance data into pandas.
-3. Reviewed dataset structure, missing values, duplicates, and statistical summaries.
-4. Cleaned missing maintenance and environmental records.
-5. Performed exploratory data analysis on numerical and categorical features.
-6. Analyzed shift performance, downtime, maintenance impact, and production output per hour.
-7. Estimated OEE (Overall Equipment Effectiveness) using availability, performance, and quality.
-8. Engineered machine learning features such as shift duration, defect rate, downtime ratio, day of week, and operating hours.
-9. Built preprocessing pipelines for numerical and categorical data.
-10. Trained and compared regression models for shift efficiency prediction.
-11. Logged model experiments with MLflow and DagsHub.
+1. Load shift performance data from SQLite.
+2. Validate empty records, missing values, and duplicates.
+3. Clean environmental and maintenance-related fields.
+4. Engineer performance features such as `shift_duration`, `defect_rate`, `downtime_ratio`, `day_of_week`, and `hour_of_day`.
+5. Analyze production output, downtime, defects, maintenance impact, and OEE trends.
+6. Train regression models for shift efficiency prediction.
+7. Track experiments and model versions with MLflow and DagsHub.
+8. Serve predictions through FastAPI.
+9. Provide an interactive Streamlit dashboard for prediction, optimization, and retraining.
 
-## Machine Learning Models
+## Machine Learning
 
-The notebook compares the following regression models:
+The project compares regression models including:
 
 - Linear Regression
 - Random Forest Regressor
 - Gradient Boosting Regressor
 
-Model performance is evaluated using:
+Model performance is evaluated with:
 
 - R2 score
 - Mean Absolute Error
 - Mean Squared Error
 
-## Key Business Insights Explored
-
-- Shift-level production output and efficiency trends
-- Maintenance vs no-maintenance operational performance
-- Downtime impact on production and machine availability
-- Monthly OEE trend analysis
-- Operator experience relationship with defect count
-- Production output per operating hour by shift
+The production pipeline uses preprocessing for numerical and categorical features through scikit-learn `ColumnTransformer` and `Pipeline` objects.
 
 ## Repository Structure
 
 ```text
 Nordex_Shift_System/
-├── .vscode/
-│   └── settings.json
-├── docs/
-│   ├── DATA_DICTIONARY.md
-│   └── PROJECT_REPORT.md
-├── notebooks/
-│   └── EDA.ipynb
-├── .gitignore
-├── LICENSE
-├── README.md
-├── requirements.txt
-└── ShiftData.db
+|-- app/
+|   `-- main.py
+|-- config/
+|   |-- constant.py
+|   `-- schema.yml
+|-- docs/
+|   |-- DATA_DICTIONARY.md
+|   `-- PROJECT_REPORT.md
+|-- notebooks/
+|   `-- EDA.ipynb
+|-- src/
+|   |-- data/
+|   |-- exception/
+|   |-- features/
+|   |-- logger/
+|   |-- models/
+|   |-- pipeline/
+|   `-- utils/
+|-- .gitignore
+|-- LICENSE
+|-- README.md
+|-- requirements.txt
+|-- setup.py
+|-- ShiftData.db
+`-- streamlit_app.py
 ```
 
 ## Technologies Used
 
 - Python
-- pandas
-- NumPy
+- pandas and NumPy
 - SQLite
-- Matplotlib
-- Seaborn
+- Matplotlib and Seaborn
 - scikit-learn
-- MLflow
-- DagsHub
-- FastAPI
-- Uvicorn
+- MLflow and DagsHub
+- FastAPI and Uvicorn
+- Streamlit
+- Optuna
 - Jupyter Notebook
 
-## How to Run the Project
+## Setup
 
 Clone the repository:
 
@@ -123,13 +121,33 @@ On Windows:
 Install dependencies:
 
 ```bash
-pip install -r requirements.txt ipykernel
+pip install -r requirements.txt
 ```
 
-Open the notebook:
+## Run the Notebook
 
 ```bash
 jupyter notebook notebooks/EDA.ipynb
+```
+
+## Run the API
+
+```bash
+uvicorn app.main:app --reload --port 8001
+```
+
+Open the API documentation at:
+
+```text
+http://127.0.0.1:8001/docs
+```
+
+## Run the Dashboard
+
+Start the API first, then run:
+
+```bash
+streamlit run streamlit_app.py
 ```
 
 ## Documentation
@@ -137,14 +155,16 @@ jupyter notebook notebooks/EDA.ipynb
 - [Project Report](docs/PROJECT_REPORT.md)
 - [Data Dictionary](docs/DATA_DICTIONARY.md)
 
-## Future Improvements
+## Deployment Roadmap
 
-- Move reusable notebook logic into Python modules under a `src/` folder.
-- Add automated tests for data cleaning and feature engineering steps.
-- Build a FastAPI endpoint for model inference.
-- Add dashboard visuals for operations managers.
-- Store large datasets in cloud storage or Git LFS for production use.
-- Add model versioning and deployment documentation.
+The next production step is cloud deployment on AWS. A suitable path is:
+
+1. Containerize the FastAPI service and Streamlit dashboard with Docker.
+2. Store sensitive DagsHub or MLflow credentials in AWS Secrets Manager or environment variables.
+3. Deploy the API to AWS App Runner, ECS Fargate, or EC2.
+4. Deploy the dashboard to Streamlit Community Cloud, EC2, or a separate container service.
+5. Store larger datasets and generated artifacts in S3 instead of the Git repository.
+6. Add monitoring for API health, model performance, and prediction errors.
 
 ## Author
 

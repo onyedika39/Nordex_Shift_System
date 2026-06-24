@@ -12,3 +12,5 @@ requests
 optuna
 PyYAML
 pydantic
+jupyter
+ipykernel
