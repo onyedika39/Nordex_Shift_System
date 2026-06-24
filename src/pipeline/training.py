@@ -1,0 +1,1 @@
+from src.models.model_training import start_model_training

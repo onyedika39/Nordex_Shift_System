@@ -1,5 +1,4 @@
 import pandas as pd
-import numpy as np
 import sys
 from src.logger import config_logger
 from src.exception import MyException
@@ -70,5 +69,5 @@ def starting_data_validation(data: pd.DataFrame):
         logger.error(f"Error occurred during data validation: {e}")
         raise MyException(e, sys)
 
-data = load_data()
-data = starting_data_validation(data)
+# data = load_data()
+# data = starting_data_validation(data)
