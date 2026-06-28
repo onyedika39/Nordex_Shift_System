@@ -15,3 +15,5 @@ os.makedirs(log_dir_path, exist_ok=True)
 
 log_file_path = os.path.join(log_dir_path, LOG_FILE)
 target_column = "shift_efficiency_score"
+repo_owner = "onyedikakenechukwu7"
+repo_name = "Nordex_Shift_System"

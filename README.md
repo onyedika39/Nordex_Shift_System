@@ -76,6 +76,8 @@ Nordex_Shift_System/
 |   |-- pipeline/
 |   `-- utils/
 |-- .gitignore
+|-- .dockerignore
+|-- Dockerfile
 |-- LICENSE
 |-- README.md
 |-- requirements.txt
@@ -150,21 +152,49 @@ Start the API first, then run:
 streamlit run streamlit_app.py
 ```
 
+By default, the dashboard connects to:
+
+```text
+http://127.0.0.1:8001
+```
+
+For a deployed API, set the `API_URL` environment variable before starting Streamlit.
+
+## Docker Deployment
+
+Build the API image:
+
+```bash
+docker build -t nordex-shift-system .
+```
+
+Run the API container locally:
+
+```bash
+docker run -p 8001:8001 nordex-shift-system
+```
+
+Open:
+
+```text
+http://127.0.0.1:8001/docs
+```
+
 ## Documentation
 
 - [Project Report](docs/PROJECT_REPORT.md)
 - [Data Dictionary](docs/DATA_DICTIONARY.md)
 
-## Deployment Roadmap
+## Cloud Deployment
 
-The next production step is cloud deployment on AWS. A suitable path is:
+The FastAPI service was containerized with Docker and deployed to Azure Container Instances. Runtime credentials such as DagsHub or MLflow tokens should be provided through environment variables and should not be committed to GitHub.
 
-1. Containerize the FastAPI service and Streamlit dashboard with Docker.
-2. Store sensitive DagsHub or MLflow credentials in AWS Secrets Manager or environment variables.
-3. Deploy the API to AWS App Runner, ECS Fargate, or EC2.
-4. Deploy the dashboard to Streamlit Community Cloud, EC2, or a separate container service.
-5. Store larger datasets and generated artifacts in S3 instead of the Git repository.
-6. Add monitoring for API health, model performance, and prediction errors.
+The deployed API exposes a health endpoint and interactive API documentation:
+
+```text
+/
+/docs
+```
 
 ## Author
 

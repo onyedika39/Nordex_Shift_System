@@ -1,0 +1,32 @@
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Git/editor files
+.git/
+.vscode/
+.idea/
+
+# Local environments and secrets
+.venv/
+venv/
+env/
+nordex_env/
+.env
+.env.*
+!.env.example
+
+# Local generated files
+logs/
+mlflow.db
+artifacts/
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+
+# Notebook cache
+.ipynb_checkpoints/
+AZURE_DEPLOYMENT.md
+deploy-azure-aci.ps1
+*.ps1
