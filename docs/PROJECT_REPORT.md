@@ -141,13 +141,13 @@ This project shows how data can improve manufacturing operations by:
 
 Recommended next steps:
 
-- containerize the API and dashboard for deployment
-- deploy the service on AWS
-- move generated artifacts and larger data assets to S3
-- secure DagsHub and MLflow credentials with environment variables or AWS Secrets Manager
+- maintain the Dockerized FastAPI service for consistent local and cloud deployment
+- keep the Azure deployment configuration aligned with the production API port and runtime environment variables
+- store sensitive DagsHub and MLflow credentials only as environment variables
+- move larger generated artifacts to external cloud storage when the project grows
 - add automated tests for data processing, feature engineering, and prediction logic
 - add CI checks for code quality before future GitHub updates
-- monitor model performance over time
+- monitor model performance over time as new shift data becomes available
 
 ## Conclusion
 
